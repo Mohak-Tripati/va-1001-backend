@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Va1001BackendJagotalkSchema < GraphQL::Schema
-  mutation(Types::MutationType)
-  query(Types::QueryType)
+  mutation(Types::MutationType) # all edit/delete runs from here
+  query(Types::QueryType) # all fetch request comes from here
 
   # For batch-loading (see https://graphql-ruby.org/dataloader/overview.html)
   use GraphQL::Dataloader
