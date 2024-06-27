@@ -10,9 +10,110 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_26_133930) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_27_125810) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "city"
+    t.string "state"
+    t.integer "zip_code"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "business_schedule", force: :cascade do |t|
+    t.string "week_start"
+    t.string "business_days", array: true
+    t.time "start_time"
+    t.time "end_time"
+    t.bigint "company_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_business_schedule_on_company_id"
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string "company_name"
+    t.string "industry_type"
+    t.integer "company_size"
+    t.string "website_link"
+    t.string "access_url"
+    t.time "time_zone"
+    t.string "company_logo"
+    t.string "custom_domain"
+    t.string "fiscal_type"
+    t.integer "num_of_months"
+    t.string "start_month"
+    t.string "end_month"
+    t.string "hierarchy_preference"
+    t.string "reporting_manager"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "currencies", force: :cascade do |t|
+    t.string "home_currency"
+    t.string "code_symbol"
+    t.integer "decimal_places"
+    t.bigint "company_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_currencies_on_company_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "group_name"
+    t.bigint "perspective_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["perspective_id"], name: "index_groups_on_perspective_id"
+  end
+
+  create_table "holiday_details", force: :cascade do |t|
+    t.string "holiday_name"
+    t.date "holiday_date"
+    t.integer "year"
+    t.bigint "company_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_holiday_details_on_company_id"
+  end
+
+  create_table "perspectives", force: :cascade do |t|
+    t.string "perspective_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "themes", force: :cascade do |t|
+    t.string "theme_name"
+    t.bigint "group_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_themes_on_group_id"
+  end
+
+  create_table "user_company_address_mappings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "address_id", null: false
+    t.bigint "company_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_user_company_address_mappings_on_address_id"
+    t.index ["company_id"], name: "index_user_company_address_mappings_on_company_id"
+    t.index ["user_id"], name: "index_user_company_address_mappings_on_user_id"
+  end
+
+  create_table "user_group_mappings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_user_group_mappings_on_group_id"
+    t.index ["user_id"], name: "index_user_group_mappings_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "first_name"
@@ -28,6 +129,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_133930) do
     t.boolean "is_logged_in"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "company_id"
+    t.index ["company_id"], name: "index_users_on_company_id"
   end
 
+  add_foreign_key "business_schedule", "companies"
+  add_foreign_key "currencies", "companies"
+  add_foreign_key "groups", "perspectives"
+  add_foreign_key "holiday_details", "companies"
+  add_foreign_key "themes", "groups"
+  add_foreign_key "user_company_address_mappings", "addresses"
+  add_foreign_key "user_company_address_mappings", "companies"
+  add_foreign_key "user_company_address_mappings", "users"
+  add_foreign_key "user_group_mappings", "groups"
+  add_foreign_key "user_group_mappings", "users"
+  add_foreign_key "users", "companies"
 end
