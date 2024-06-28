@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_28_074747) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_28_122714) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,11 +82,29 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_28_074747) do
     t.index ["company_id"], name: "index_holiday_details_on_company_id"
   end
 
+  create_table "perspective_user_mappings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "perspective_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["perspective_id"], name: "index_perspective_user_mappings_on_perspective_id"
+    t.index ["user_id"], name: "index_perspective_user_mappings_on_user_id"
+  end
+
   create_table "perspectives", force: :cascade do |t|
     t.string "perspective_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "perspective_description"
+  end
+
+  create_table "theme_user_mappings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "theme_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["theme_id"], name: "index_theme_user_mappings_on_theme_id"
+    t.index ["user_id"], name: "index_theme_user_mappings_on_user_id"
   end
 
   create_table "themes", force: :cascade do |t|
@@ -140,6 +158,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_28_074747) do
   add_foreign_key "currencies", "companies"
   add_foreign_key "groups", "perspectives"
   add_foreign_key "holiday_details", "companies"
+  add_foreign_key "perspective_user_mappings", "perspectives"
+  add_foreign_key "perspective_user_mappings", "users"
+  add_foreign_key "theme_user_mappings", "themes"
+  add_foreign_key "theme_user_mappings", "users"
   add_foreign_key "themes", "groups"
   add_foreign_key "user_company_address_mappings", "addresses"
   add_foreign_key "user_company_address_mappings", "companies"

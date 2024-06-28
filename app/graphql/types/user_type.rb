@@ -14,6 +14,9 @@ module Types
         field :whatsapp_number, Integer
         field :mobile_number, Integer
         field :password, String
+        field :perspectives, [Types::PerspectiveType], null: true
+        field :themes, [Types::ThemeType], null: true
+        field :groups, [Types::GroupType], null: true
 
     end
   end

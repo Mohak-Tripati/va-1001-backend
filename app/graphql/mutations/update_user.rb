@@ -48,7 +48,7 @@
 
 
 
-class Mutations::EditUser < Mutations::BaseMutation
+class Mutations::UpdateUser < Mutations::BaseMutation
     argument :id, ID, required: true
     argument :first_name, String, required: false
     argument :middle_name, String, required: false
