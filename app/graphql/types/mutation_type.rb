@@ -10,5 +10,9 @@ module Types
     field :editUser, mutation: Mutations::EditUser
     field :deleteUser, mutation: Mutations::DeleteUser
 
+    field :createPerspective, mutation: Mutations::CreatePerspective
+    field :updatePerspective, mutation: Mutations::UpdatePerspective
+    field :deletePerspective, mutation: Mutations::DeletePerspective
+
   end
 end
