@@ -18,5 +18,12 @@ module Types
       User.find(id)
     end
 
+    # company 
+    field :company, [Types::CompanyType], null: false
+
+    def company
+      Company.all # coming from models > User, these are active records of ruby on rails, coming from a gem, it replaces database queries like select * from user;
+    end
+
   end
 end

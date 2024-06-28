@@ -14,5 +14,24 @@ module Types
     field :updatePerspective, mutation: Mutations::UpdatePerspective
     field :deletePerspective, mutation: Mutations::DeletePerspective
 
+    # company 
+    field :createCompany, mutation: Mutations::CreateCompany
+    field :updateCompany, mutation: Mutations::UpdateCompany
+    field :deleteCompany, mutation: Mutations::DeleteCompany
+
+    # holiday details
+    field :createHolidayDetails, mutation: Mutations::CreateHolidayDetails
+    field :updateHolidayDetails, mutation: Mutations::UpdateHolidayDetails
+    field :deleteHolidayDetails, mutation: Mutations::DeleteHolidayDetails
+
+    # business schedules
+    field :createBusinessSchedule, mutation: Mutations::CreateBusinessSchedule
+    field :updateBusinessSchedule, mutation: Mutations::UpdateBusinessSchedule
+    field :deleteBusinessSchedule, mutation: Mutations::DeleteBusinessSchedule
+
+    # department
+
+
+
   end
 end
