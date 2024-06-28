@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_27_125810) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_28_074747) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,6 +68,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_27_125810) do
     t.bigint "perspective_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "group_description"
     t.index ["perspective_id"], name: "index_groups_on_perspective_id"
   end
 
@@ -85,6 +86,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_27_125810) do
     t.string "perspective_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "perspective_description"
   end
 
   create_table "themes", force: :cascade do |t|
@@ -92,6 +94,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_27_125810) do
     t.bigint "group_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "theme_description"
     t.index ["group_id"], name: "index_themes_on_group_id"
   end
 
