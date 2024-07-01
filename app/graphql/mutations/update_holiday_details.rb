@@ -9,7 +9,7 @@ module Mutations
     field :holiday_details, Types::HolidayDetailsType, null: false
     field :errors, [String], null: false
 
-    def resolve(**args)
+    def resolve(args)
       holiday_details = HolidayDetail.find_by(id: args[:id])
       return { holiday_details: nil, errors: ['HolidayDetails not found'] } if holiday_details.nil?
 

@@ -11,7 +11,7 @@ module Mutations
       field :business_schedule, Types::BusinessScheduleType, null: false
       field :errors, [String], null: false
   
-      def resolve(**args)
+      def resolve(args)
         business_schedule = BusinessSchedule.find_by(id: args[:id])
         return { business_schedule: nil, errors: ['BusinessScheduleType not found'] } if business_schedule.nil?
   

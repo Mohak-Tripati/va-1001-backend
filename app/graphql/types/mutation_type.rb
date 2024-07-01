@@ -29,6 +29,12 @@ module Types
     field :updateBusinessSchedule, mutation: Mutations::UpdateBusinessSchedule
     field :deleteBusinessSchedule, mutation: Mutations::DeleteBusinessSchedule
 
+    # currency
+    field :createCurrency, mutation: Mutations::CreateCurrency
+    field :updateCurrency, mutation: Mutations::UpdateCurrency
+    field :deleteCurrency, mutation: Mutations::DeleteCurrency
+
+
     # department
 
 
