@@ -7,5 +7,6 @@ module Types
         field :perspective_description, String
         field :groups, [Types::GroupType], null: true
 
+
     end
   end

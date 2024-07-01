@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema[7.1].define(version: 2024_07_01_140950) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,15 +27,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_140950) do
     t.string "address_type"
   end
 
-  create_table "business_schedule", force: :cascade do |t|
+  create_table "business_schedules", force: :cascade do |t|
     t.string "week_start"
     t.string "business_days", array: true
     t.time "start_time"
     t.time "end_time"
-    t.bigint "company_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_business_schedule_on_company_id"
+    t.bigint "perspective_id", null: false
+    t.index ["perspective_id"], name: "index_business_schedules_on_perspective_id"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -59,10 +61,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_140950) do
     t.string "home_currency"
     t.string "code_symbol"
     t.integer "decimal_places"
-    t.bigint "company_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_currencies_on_company_id"
+    t.bigint "perspective_id", null: false
+    t.index ["perspective_id"], name: "index_currencies_on_perspective_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -78,10 +80,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_140950) do
     t.string "holiday_name"
     t.date "holiday_date"
     t.integer "year"
-    t.bigint "company_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_holiday_details_on_company_id"
+    t.bigint "perspective_id", null: false
+    t.index ["perspective_id"], name: "index_holiday_details_on_perspective_id"
   end
 
   create_table "perspective_user_mappings", force: :cascade do |t|
@@ -98,6 +100,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_140950) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "perspective_description"
+
   end
 
   create_table "theme_user_mappings", force: :cascade do |t|
@@ -107,6 +110,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_140950) do
     t.datetime "updated_at", null: false
     t.index ["theme_id"], name: "index_theme_user_mappings_on_theme_id"
     t.index ["user_id"], name: "index_theme_user_mappings_on_user_id"
+
   end
 
   create_table "themes", force: :cascade do |t|
@@ -156,14 +160,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_140950) do
     t.index ["company_id"], name: "index_users_on_company_id"
   end
 
-  add_foreign_key "business_schedule", "companies"
-  add_foreign_key "currencies", "companies"
+  add_foreign_key "business_schedules", "perspectives"
+  add_foreign_key "currencies", "perspectives"
   add_foreign_key "groups", "perspectives"
-  add_foreign_key "holiday_details", "companies"
+
   add_foreign_key "perspective_user_mappings", "perspectives"
   add_foreign_key "perspective_user_mappings", "users"
   add_foreign_key "theme_user_mappings", "themes"
   add_foreign_key "theme_user_mappings", "users"
+
+  add_foreign_key "holiday_details", "perspectives"
+
   add_foreign_key "themes", "groups"
   add_foreign_key "user_company_address_mappings", "addresses"
   add_foreign_key "user_company_address_mappings", "companies"
