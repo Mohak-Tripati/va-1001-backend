@@ -1,11 +1,11 @@
 class Mutations::CreateTheme < Mutations::BaseMutation
     argument :theme_name, String, required: true
     argument :theme_description, String, required: true
-    argument :group_id, ID, required: true
+    argument :group_id, ID, required: false
   
   
     # field :user, Types::UserType, null: false
-    field :theme, Types::ThemeType, null: false
+    field :theme, Types::ThemeType, null: true
     field :errors, [String], null: false
   
     def resolve(args)

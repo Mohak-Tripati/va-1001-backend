@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-    belongs_to :company
+    belongs_to :company, optional: true
+    
     has_many :user_group_mappings, dependent: :destroy
     has_many :groups, through: :user_group_mappings
 

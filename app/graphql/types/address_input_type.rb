@@ -1,7 +1,7 @@
 module Types
     class AddressInputType < Types::BaseInputObject
       
-        # argument :id, ID
+        argument :id, ID, required: false
         argument :address_line, String
         argument :city, String
         argument :state, String

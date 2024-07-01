@@ -23,9 +23,9 @@ module Types
     field :updateTheme, mutation: Mutations::UpdateTheme
     field :deleteTheme, mutation: Mutations::DeleteTheme
 
-    field :createPerspective, mutation: Mutations::CreatePerspective
-    field :updatePerspective, mutation: Mutations::UpdatePerspective
-    field :deletePerspective, mutation: Mutations::DeletePerspective
+    # field :createPerspective, mutation: Mutations::CreatePerspective
+    # field :updatePerspective, mutation: Mutations::UpdatePerspective
+    # field :deletePerspective, mutation: Mutations::DeletePerspective
 
     # company 
     field :createCompany, mutation: Mutations::CreateCompany

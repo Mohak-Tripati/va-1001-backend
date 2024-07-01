@@ -97,18 +97,19 @@
     def resolve(args)
       user = User.find_by(id: args[:id])
       return { user: nil, errors: ['User not found'] } if user.nil?
-  
+      
       if user.update(args.except(:id, :addresses))
         address_update_errors = []
   
         if args[:addresses]
           args[:addresses].each do |address_attrs|
             address = Address.find_or_initialize_by(id: address_attrs[:id])
-            unless address.update(address_attrs.except(:id))
+            # unless address.update(address_attrs.except(:id))
+            unless address.update(address_attrs.to_h)
               address_update_errors << address.errors.full_messages
             end
   
-            address_mapping = AddressMapping.find_or_initialize_by(user_id: user.id, address_id: address.id)
+            address_mapping = UserCompanyAddressMapping.find_or_initialize_by(user_id: user.id, address_id: address.id, company_id: nil)
             unless address_mapping.update(address_id: address.id, user_id: user.id, company_id: nil)
               address_update_errors << address_mapping.errors.full_messages
             end

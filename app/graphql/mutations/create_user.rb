@@ -40,8 +40,9 @@
     argument :profile_image, String, required: false
     argument :whatsapp_number, String, required: false
     argument :mobile_number, String, required: false
+    argument :company_id, ID, required: false
   
-    field :user, Types::UserType, null: false
+    field :user, Types::UserType, null: true
     field :errors, [String], null: false
   
     def resolve(args)
