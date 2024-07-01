@@ -14,6 +14,7 @@ module Types
         field :whatsapp_number, Integer
         field :mobile_number, Integer
         field :password, String
+        field :company_id, ID, null: true
         #populate (in mongodb way)
         field :addresses, [Types::AddressType], null: true
         field :perspectives, [Types::PerspectiveType], null: true
