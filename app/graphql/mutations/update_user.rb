@@ -48,7 +48,37 @@
 
 
 
-class Mutations::EditUser < Mutations::BaseMutation
+# class Mutations::UpdateUser < Mutations::BaseMutation
+#     argument :id, ID, required: true
+#     argument :first_name, String, required: false
+#     argument :middle_name, String, required: false
+#     argument :last_name, String, required: false
+#     argument :work_email_address, String, required: false
+#     argument :prefered_language, String, required: false
+#     argument :ai_assistant, String, required: false
+#     argument :profile_image, String, required: false
+#     argument :whatsapp_number, String, required: false
+#     argument :mobile_number, String, required: false
+#     argument :addresses,[Types::AddressInputType] , required: false
+  
+#     field :user, Types::UserType, null: false
+#     field :errors, [String], null: false
+  
+#     def resolve(args)
+#       user = User.find_by(id: args[:id])
+#       return { user: nil, errors: ['User not found'] } if user.nil?
+  
+#       if user.update(args.except(:id))
+#         { user: user, errors: [] }
+#       else
+#         { user: nil, errors: user.errors.full_messages }
+#       end
+#     end
+#   end
+
+
+
+  class Mutations::UpdateUser < Mutations::BaseMutation
     argument :id, ID, required: true
     argument :first_name, String, required: false
     argument :middle_name, String, required: false
@@ -59,19 +89,41 @@ class Mutations::EditUser < Mutations::BaseMutation
     argument :profile_image, String, required: false
     argument :whatsapp_number, String, required: false
     argument :mobile_number, String, required: false
+    argument :addresses, [Types::AddressInputType], required: false
   
-    field :user, Types::UserType, null: false
+    field :user, Types::UserType, null: true
     field :errors, [String], null: false
   
     def resolve(args)
       user = User.find_by(id: args[:id])
       return { user: nil, errors: ['User not found'] } if user.nil?
   
-      if user.update(args.except(:id))
-        { user: user, errors: [] }
+      if user.update(args.except(:id, :addresses))
+        address_update_errors = []
+  
+        if args[:addresses]
+          args[:addresses].each do |address_attrs|
+            address = Address.find_or_initialize_by(id: address_attrs[:id])
+            unless address.update(address_attrs.except(:id))
+              address_update_errors << address.errors.full_messages
+            end
+  
+            address_mapping = AddressMapping.find_or_initialize_by(user_id: user.id, address_id: address.id)
+            unless address_mapping.update(address_id: address.id, user_id: user.id, company_id: nil)
+              address_update_errors << address_mapping.errors.full_messages
+            end
+          end
+        end
+  
+        if address_update_errors.flatten.empty?
+          { user: user, errors: [] }
+        else
+          { user: user, errors: address_update_errors.flatten }
+        end
       else
         { user: nil, errors: user.errors.full_messages }
       end
     end
   end
+  
   

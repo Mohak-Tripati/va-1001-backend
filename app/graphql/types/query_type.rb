@@ -2,6 +2,8 @@
 
 module Types
   class QueryType < Types::BaseObject
+
+     #user fetch controllers 
     field :users, [Types::UserType], null: false 
 
     def users
@@ -17,6 +19,18 @@ module Types
     def user(id:)
       User.find(id)
     end
+
+
+
+  #perspective fetch controllers 
+
+    field :perspective, [Types::PerspectiveType], null: false 
+
+    def perspective
+      Perspective.all
+    end
+
+    
 
     # company 
     # all data
@@ -84,6 +98,7 @@ module Types
     def currency(id:)
       Currency.find(id)
     end
+
 
   end
 end
