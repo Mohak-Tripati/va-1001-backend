@@ -2,6 +2,7 @@ class Mutations::CreateGroup < Mutations::BaseMutation
     argument :group_name, String, required: true
     argument :group_description, String, required: true
     argument :perspective_id, ID, required: true
+
   
   
     # field :user, Types::UserType, null: false

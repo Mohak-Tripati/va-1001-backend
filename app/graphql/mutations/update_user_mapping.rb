@@ -8,8 +8,6 @@ class Mutations::UpdateUserMapping < Mutations::BaseMutation
 
     field :success, Boolean, null: false
 
-  
-
     field :errors, [String], null: false
   
       

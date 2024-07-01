@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_28_122714) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_01_140950) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_28_122714) do
     t.string "country"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "address_line"
+    t.string "address_type"
   end
 
   create_table "business_schedule", force: :cascade do |t|
@@ -117,9 +119,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_28_122714) do
   end
 
   create_table "user_company_address_mappings", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.bigint "address_id", null: false
-    t.bigint "company_id", null: false
+    t.bigint "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["address_id"], name: "index_user_company_address_mappings_on_address_id"
